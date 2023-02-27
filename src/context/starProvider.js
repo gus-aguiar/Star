@@ -4,6 +4,7 @@ import StarContext from './StarContext';
 
 function Provider({ children }) {
   const [state, setState] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,8 +18,8 @@ function Provider({ children }) {
   }, []);
 
   const values = useMemo(() => ({
-    state, setState,
-  }), [state, setState]);
+    state, setState, search, setSearch,
+  }), [state, setState, search, setSearch]);
 
   return (
     <StarContext.Provider value={ values }>
