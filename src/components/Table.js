@@ -18,7 +18,7 @@ function Table() {
     setFilters([...filters, newFilter]);
   };
 
-  const filteredByName = state
+  const filteredByName = filtered.length > 0 ? filtered : state
     ?.results
     ?.filter((searchRepo) => searchRepo.name.includes(search));
 
