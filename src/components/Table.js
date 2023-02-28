@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Table() {
+  const arrayColumn = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+
   const { state, search, setSearch } = useContext(StarContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [arrayCol, setArrayCol] = useState(arrayColumn);
 
   const handleFilterAdd = () => {
     const newFilter = {
@@ -16,6 +21,15 @@ function Table() {
       value,
     };
     setFilters([...filters, newFilter]);
+  };
+
+  const handleClick = () => {
+    const newArray = arrayCol.filter((e) => e !== column);
+    setArrayCol(newArray);
+    setColumn('population');
+    setComparison('maior que');
+    setValue('0');
+    handleFilterAdd();
   };
 
   const filteredByName = filtered.length > 0 ? filtered : state
@@ -56,11 +70,9 @@ function Table() {
           onChange={ (e) => setColumn(e.target.value) }
           data-testid="column-filter"
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {arrayCol?.map((e) => (
+            <option value={ e } key={ e }>{e}</option>
+          ))}
         </select>
         <label htmlFor="comparison-filter">comparação</label>
         <select
@@ -82,7 +94,7 @@ function Table() {
           data-testid="value-filter"
         />
         <button
-          onClick={ handleFilterAdd }
+          onClick={ handleClick }
           data-testid="button-filter"
         >
           Filter
