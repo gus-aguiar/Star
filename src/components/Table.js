@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
 
 function Table() {
@@ -7,34 +7,31 @@ function Table() {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [filtered, setFiltered] = useState([]);
+  const [filters, setFilters] = useState([]);
 
-  const handleColuna = (event) => {
-    setColumn(event.target.value);
-  };
-
-  const handleComparação = (event) => {
-    setComparison(event.target.value);
-  };
-
-  const handleValueChange = (event) => {
-    setValue(event.target.value);
+  const handleFilterAdd = () => {
+    const newFilter = {
+      column,
+      comparison,
+      value,
+    };
+    setFilters([...filters, newFilter]);
   };
 
   const filteredByName = state
     ?.results
     ?.filter((searchRepo) => searchRepo.name.includes(search));
 
-  const handleFilterClick = () => {
+  const filterPlanets = (arrayFilter) => {
     const filteredByValueAndName = filteredByName.filter((planet) => {
-      if (comparison === 'maior que') {
-        console.log(planet[column]);
-        return Number(planet[column]) > Number(value);
+      if (arrayFilter.comparison === 'maior que') {
+        return Number(planet[arrayFilter.column]) > Number(arrayFilter.value);
       }
-      if (comparison === 'menor que') {
-        return Number(planet[column]) < Number(value);
+      if (arrayFilter.comparison === 'menor que') {
+        return Number(planet[arrayFilter.column]) < Number(arrayFilter.value);
       }
-      if (comparison === 'igual') {
-        return Number(planet[column]) === Number(value);
+      if (arrayFilter.comparison === 'igual') {
+        return Number(planet[arrayFilter.column]) === Number(arrayFilter.value);
       } return filteredByName;
     });
     return setFiltered(filteredByValueAndName);
@@ -45,6 +42,10 @@ function Table() {
       .some((p) => p.name === planet
         .name));
 
+  useEffect(() => {
+    filters.forEach((filter) => filterPlanets(filter));
+  }, [filters]);
+
   return (
     <div>
       <div>
@@ -52,7 +53,7 @@ function Table() {
         <select
           id="column-filter"
           value={ column }
-          onChange={ handleColuna }
+          onChange={ (e) => setColumn(e.target.value) }
           data-testid="column-filter"
         >
           <option value="population">population</option>
@@ -65,7 +66,7 @@ function Table() {
         <select
           id="comparison-filter"
           value={ comparison }
-          onChange={ handleComparação }
+          onChange={ (e) => setComparison(e.target.value) }
           data-testid="comparison-filter"
         >
           <option value="maior que">maior que</option>
@@ -77,10 +78,16 @@ function Table() {
           id="value-filter"
           type="number"
           value={ value }
-          onChange={ handleValueChange }
+          onChange={ (e) => setValue(e.target.value) }
           data-testid="value-filter"
         />
-        <button onClick={ handleFilterClick } data-testid="button-filter">Filter</button>
+        <button
+          onClick={ handleFilterAdd }
+          data-testid="button-filter"
+        >
+          Filter
+
+        </button>
       </div>
       <input
         type="text"
