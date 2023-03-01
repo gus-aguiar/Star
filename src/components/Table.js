@@ -114,13 +114,13 @@ function Table() {
       {filters.map((filter, index) => (
         <div data-testid="filter" key={ index }>
           <button
-            data-testid="filter"
+            type="button"
             onClick={ () => {
               const cloneArray = [...filters];
               cloneArray.splice(index, 1);
               setFilters(cloneArray);
               setArrayCol([...arrayCol, filter.column]);
-              setFiltered([...state.results]);
+              setFiltered([]);
             } }
           >
             𝙭
@@ -134,6 +134,17 @@ function Table() {
           </span>
         </div>
       ))}
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ () => {
+          setFilters([]);
+
+          setFiltered([]);
+        } }
+      >
+        Remover todas filtragens
+      </button>
       <table>
         <thead>
           <tr>
