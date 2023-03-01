@@ -34,7 +34,10 @@ function Table() {
 
   const filteredByName = filtered.length > 0 ? filtered : state
     ?.results
-    ?.filter((searchRepo) => searchRepo.name.includes(search));
+    ?.filter((searchRepo) => searchRepo
+      .name
+      .toLowerCase()
+      .includes(search.toLowerCase()));
 
   const filterPlanets = (arrayFilter) => {
     const filteredByValueAndName = filteredByName.filter((planet) => {
@@ -108,6 +111,29 @@ function Table() {
         data-testid="name-filter"
         onChange={ (e) => setSearch(e.target.value) }
       />
+      {filters.map((filter, index) => (
+        <div data-testid="filter" key={ index }>
+          <button
+            data-testid="filter"
+            onClick={ () => {
+              const cloneArray = [...filters];
+              cloneArray.splice(index, 1);
+              setFilters(cloneArray);
+              setArrayCol([...arrayCol, filter.column]);
+              setFiltered([...state.results]);
+            } }
+          >
+            𝙭
+          </button>
+          <span>
+            {filter.column}
+            {' '}
+            {filter.comparison}
+            {' '}
+            {filter.value}
+          </span>
+        </div>
+      ))}
       <table>
         <thead>
           <tr>
