@@ -1,0 +1,44 @@
+// @use 'variables' as *;
+
+// @mixin border_radius($radius) {
+//   -webkit-border-radius: $radius;
+//   -moz-border-radius: $radius;
+//   -ms-border-radius: $radius;
+//   border-radius: $radius;
+// }
+
+// @mixin box_shadow($shadow) {
+//   -webkit-box-shadow: $shadow;
+//   -moz-box-shadow: $shadow;
+//   -ms-box-shadow: $shadow;
+//   box-shadow: $shadow;
+// }
+
+// @mixin flexbox($direction) {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: $direction;
+// }
+
+// @mixin button($color, $bgcolor){
+//   border: none;
+//   color: $color;
+//   outline: none;
+//   height: 1.8rem;
+//   padding: 0.5rem;
+//   border-radius: 0.3rem;
+//   cursor: pointer;
+//   line-height: 0;
+//   background-color: $bgcolor;
+//   width: 6rem;
+//   transition: 0.2s linear;
+  
+//   &:hover {
+//     background-color: darken($bgcolor, 10%);
+//   }
+//   &:disabled{
+//     color: darken($color, 30%);
+//     background-color:darken($bgcolor, 30%) ;
+//   }
+// }

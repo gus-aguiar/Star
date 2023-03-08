@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../context/StarContext';
+// import styles from '../styles/Table.module.scss';
 
 function Table() {
   const arrayColumn = [
